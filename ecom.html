@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Muhammed Ashfaque's Portfolio</title>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta content="" name="keywords">
+  <meta content="" name="description">
+
+  <!-- Favicons -->
+  <!-- <link href="img/favicon.png" rel="icon">
+  <link href="img/apple-touch-icon.png" rel="apple-touch-icon"> -->
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Roboto:100,300,400,500,700|Philosopher:400,400i,700,700i" rel="stylesheet">
+
+  <!-- Bootstrap css -->
+  <!-- <link rel="stylesheet" href="css/bootstrap.css"> -->
+  <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Libraries CSS Files -->
+  <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+  <link href="lib/owlcarousel/assets/owl.theme.default.min.css" rel="stylesheet">
+  <link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  <link href="lib/animate/animate.min.css" rel="stylesheet">
+  <link href="lib/modal-video/css/modal-video.min.css" rel="stylesheet">
+
+  <!-- Main Stylesheet File -->
+  <link href="css/style.css" rel="stylesheet">
+
+  <!-- =======================================================
+    Theme Name: eStartup
+    Theme URL: https://bootstrapmade.com/estartup-bootstrap-landing-page-template/
+    Author: BootstrapMade.com
+    License: https://bootstrapmade.com/license/
+  ======================================================= -->
+</head>
+
+<body>
+
+  <header id="header" class="header header-hide">
+    <div class="container">
+
+      <!-- <div id="logo" class="pull-left">
+        <h1><a href="#body" class="scrollto"><span>e</span>Startup</a></h1>
+        <!-- Uncomment below if you prefer to use an image logo -->
+        <!-- <a href="#body"><img src="img/logo.png" alt="" title="" /></a> -->
+      <!-- </div>  -->
+
+      <nav id="nav-menu-container" class="float-left">
+        <ul class="nav-menu">
+          <li class="menu-active"><a href="index.html">Home</a></li>
+          <!-- Add more menu items here -->
+        </ul>
+      </nav>
+      <!-- #nav-menu-container -->
+    </div>
+  </header><!-- #header -->
+
+<section id="screenshots" class="padd-section text-center wow fadeInUp">
+
+    <div class="container">
+      <div class="section-title text-center">
+        <h2>Ecommerce website</h2>
+        <p class="separator">I've developed an efficient e-commerce website that empowers users with a seamless shopping experience. Adding products to their virtual cart is a breeze, and if they change their minds, they can effortlessly remove items with a simple click. The cart management system allows users to keep track of their selections and receive a totalized amount for their purchases, making informed decisions about their shopping. Furthermore, the website enables easy updates to item quantities in the cart, ensuring a flexible and user-friendly shopping process. Whether customers want to add, delete, or adjust their selections, our platform provides a hassle-free and enjoyable shopping journey.</p>
+        <br>
+        <h3>Frontend</h3>
+      </div>
+    </div>
+
+    <div class="container">
+        <div class="owl-carousel owl-theme" id="image-carousel" data-toggle="modal" data-target="#exampleModal">
+          <div class="image-container rounded">
+            <img src="img/screen/Screenshot (37).png" alt="img">
+          </div>
+          <div class="image-container">
+            <img src="img/screen/Screenshot (38).png" alt="img">
+          </div>
+          <div class="image-container">
+            <img src="img/screen/Screenshot (39).png" alt="img">
+          </div>
+         
+
+
+        </div>
+      </div>
+      
+
+  </section>
+
+  <section class="padd-section text-center wow fadeInUp">
+
+    <div class="container">
+      <div class="section-title text-center">
+        <h3>Backend</h3>
+        
+      </div>
+    </div>
+
+    <div class="container">
+        <div class="owl-carousel owl-theme" id="image-carousels" data-toggle="modal" data-target="#exampleModal">
+          <div class="image-container">
+            <img src="img/screen/Screenshot (50).png" alt="img">
+          </div>
+          <div class="image-container">
+            <img src="img/screen/Screenshot (51).png" alt="img">
+          </div>
+          <div class="image-container">
+            <img src="img/screen/Screenshot (52).png" alt="img">
+          </div>
+          <div class="image-container">
+            <img src="img/screen/Screenshot (53).png" alt="img">
+          </div>
+          <div class="image-container">
+            <img src="img/screen/Screenshot (54).png" alt="img">
+          </div>
+          <div class="image-container">
+            <img src="img/screen/Screenshot (55).png" alt="img">
+          </div>
+          
+
+
+
+          
+        
+        </div>
+        
+      </div>
+      
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document" style="max-width: 800px; max-height: 600px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <!-- <h5 class="modal-title" id="exampleModalLabel">Modal title</h5> -->
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="image-modal" id="modal">
+          <!-- <span class="close" id="close-modal">&times;</span> -->
+          <img src="" alt="Enlarged Image" id="modal-image" style="max-width: 100%; max-height: 100%;">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+       <script>
+        const imageCarousel = document.getElementById("image-carousel");
+        const imageCarousels = document.getElementById("image-carousels");
+        const modal = document.getElementById("modal");
+        const modalImage = document.getElementById("modal-image");
+        const closeModal = document.getElementById("close-modal");
+
+        imageCarousel.addEventListener("click", (e) => {
+            if (e.target.tagName === "IMG") {
+                modal.style.display = "block";
+                modalImage.src = e.target.src;
+            }
+        });
+        imageCarousels.addEventListener("click", (e) => {
+            if (e.target.tagName === "IMG") {
+                modal.style.display = "block";
+                modalImage.src = e.target.src;
+            }
+        });
+
+        closeModal.addEventListener("click", () => {
+            modal.style.display = "none";
+        });
+    </script>
+  </section>
+  <br>
+  <footer class="footer">
+   
+        
+
+    <div class="copyrights">
+      <div class="container">
+        <p>&copy; Copyrights eStartup. All rights reserved.</p>
+        <div class="credits">
+          <!--
+            All the links in the footer should remain intact.
+            You can delete the links only if you purchased the pro version.
+            Licensing information: https://bootstrapmade.com/license/
+            Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=eStartup
+          -->
+          Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> | Distributed by <a href="https://themewagon.com/">ThemeWagon</a>
+        </div>
+      </div>
+    </div>
+
+  </footer>
+
+
+
+  <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+
+  <!-- JavaScript Libraries -->
+  <script src="lib/jquery/jquery.min.js"></script>
+  <script src="lib/jquery/jquery-migrate.min.js"></script>
+  <script src="lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="lib/superfish/hoverIntent.js"></script>
+  <script src="lib/superfish/superfish.min.js"></script>
+  <script src="lib/easing/easing.min.js"></script>
+  <script src="lib/modal-video/js/modal-video.js"></script>
+  <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+  <script src="lib/wow/wow.min.js"></script>
+  <!-- Contact Form JavaScript File -->
+  <script src="contactform/contactform.js"></script>
+
+  <!-- Template Main Javascript File -->
+  <script src="js/main.js"></script>
+
+</body>
+</html>
