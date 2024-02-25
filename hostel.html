@@ -144,103 +144,52 @@
         </div>
       </div>
       
-
+      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document" style="max-width: 800px; max-height: 600px;">
+          <div class="modal-content">
+            <div class="modal-header">
+              <!-- <h5 class="modal-title" id="exampleModalLabel">Modal title</h5> -->
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="image-modal" id="modal">
+                <!-- <span class="close" id="close-modal">&times;</span> -->
+                <img src="" alt="Enlarged Image" id="modal-image" style="max-width: 100%; max-height: 100%;">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+             <script>
+              const imageCarousel = document.getElementById("image-carousel");
+              const imageCarousels = document.getElementById("image-carousels");
+              const modal = document.getElementById("modal");
+              const modalImage = document.getElementById("modal-image");
+              const closeModal = document.getElementById("close-modal");
+      
+              imageCarousel.addEventListener("click", (e) => {
+                  if (e.target.tagName === "IMG") {
+                      modal.style.display = "block";
+                      modalImage.src = e.target.src;
+                  }
+              });
+              imageCarousels.addEventListener("click", (e) => {
+                  if (e.target.tagName === "IMG") {
+                      modal.style.display = "block";
+                      modalImage.src = e.target.src;
+                  }
+              });
+      
+              closeModal.addEventListener("click", () => {
+                  modal.style.display = "none";
+              });
+          </script>
   </section>
   
 
-  <section class="padd-section text-center wow fadeInUp">
-
-    <div class="container">
-      <div class="section-title text-center">
-        <h3>Backend</h3>
-        
-      </div>
-    </div>
-
-    <div class="container">
-        <div class="owl-carousel owl-theme" id="image-carousels" data-toggle="modal" data-target="#exampleModal">
-          <div class="image-container">
-            <img src="img/social/2024-01-12 (14).png" alt="img">
-          </div>
-          <div class="image-container">
-            <img src="img/social/2024-01-12 (15).png" alt="img">
-          </div>
-          <div class="image-container">
-            <img src="img/social/2024-01-12 (16).png" alt="img">
-          </div>
-          <div class="image-container">
-            <img src="img/social/2024-01-12 (17).png" alt="img">
-          </div>
-          <div class="image-container">
-            <img src="img/social/2024-01-12 (18).png" alt="img">
-          </div>
-          <div class="image-container">
-            <img src="img/social/2024-01-12 (19).png" alt="img">
-          </div>
-          <div class="image-container">
-            <img src="img/social/2024-01-12 (20).png" alt="img">
-          </div>
-          <div class="image-container">
-            <img src="img/social/2024-01-12 (21).png" alt="img">
-          </div>
-          
-          
-
-
-
-          
-        
-        </div>
-        
-      </div>
-      
-
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document" style="max-width: 800px; max-height: 600px;">
-    <div class="modal-content">
-      <div class="modal-header">
-        <!-- <h5 class="modal-title" id="exampleModalLabel">Modal title</h5> -->
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="image-modal" id="modal">
-          <!-- <span class="close" id="close-modal">&times;</span> -->
-          <img src="" alt="Enlarged Image" id="modal-image" style="max-width: 100%; max-height: 100%;">
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-       <script>
-        const imageCarousel = document.getElementById("image-carousel");
-        const imageCarousels = document.getElementById("image-carousels");
-        const modal = document.getElementById("modal");
-        const modalImage = document.getElementById("modal-image");
-        const closeModal = document.getElementById("close-modal");
-
-        imageCarousel.addEventListener("click", (e) => {
-            if (e.target.tagName === "IMG") {
-                modal.style.display = "block";
-                modalImage.src = e.target.src;
-            }
-        });
-        imageCarousels.addEventListener("click", (e) => {
-            if (e.target.tagName === "IMG") {
-                modal.style.display = "block";
-                modalImage.src = e.target.src;
-            }
-        });
-
-        closeModal.addEventListener("click", () => {
-            modal.style.display = "none";
-        });
-    </script>
-  </section>
   <br>
   <footer class="footer">
    
