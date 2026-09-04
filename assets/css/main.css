@@ -255,7 +255,7 @@ h6 {
     transition: 0.3s;
   }
 
-  .navmenu>ul>li>a:before {
+  /* .navmenu>ul>li>a:before {
     content: "";
     position: absolute;
     height: 2px;
@@ -265,7 +265,7 @@ h6 {
     visibility: hidden;
     width: 0px;
     transition: all 0.3s ease-in-out 0s;
-  }
+  } */
 
   .navmenu a:hover:before,
   .navmenu li:hover>a:before,
@@ -2210,11 +2210,36 @@ section,
 .latest-project {
   background: #fff;
   border: 1px solid var(--line);
+  border-radius: 24px;
   display: flex;
   flex-direction: column;
   min-height: 390px;
   overflow: hidden;
   transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.latest-project-image {
+  background: #17221f;
+  flex: 1;
+  min-height: 220px;
+  overflow: hidden;
+}
+
+.latest-project-image img {
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  transition: transform 0.5s ease;
+  width: 100%;
+}
+
+.latest-project:hover .latest-project-image img {
+  transform: scale(1.04);
+}
+
+.latest-project-cisb .latest-project-image img {
+  object-position: center center;
 }
 
 .latest-project:hover {
@@ -2463,6 +2488,109 @@ section,
   background: var(--paper);
 }
 
+.featured-work-grid {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(3, 1fr);
+  margin-bottom: 52px;
+}
+
+.featured-work-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  box-shadow: 0 10px 26px rgba(24, 34, 31, 0.04);
+  overflow: hidden;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.featured-work-card:hover {
+  box-shadow: 0 18px 38px rgba(24, 34, 31, 0.11);
+  transform: translateY(-5px);
+}
+
+.featured-work-media {
+  aspect-ratio: 16 / 10;
+  background: #17221f;
+  overflow: hidden;
+  position: relative;
+}
+
+.featured-work-media img {
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  transition: transform 0.5s ease;
+  width: 100%;
+}
+
+.featured-work-card:nth-child(3) .featured-work-media img {
+  object-position: center center;
+}
+
+.featured-work-card:hover .featured-work-media img {
+  transform: scale(1.045);
+}
+
+.featured-work-badge {
+  background: rgba(24, 34, 31, 0.86);
+  border-radius: 999px;
+  bottom: 13px;
+  color: #fff;
+  font-family: var(--nav-font);
+  font-size: 9px;
+  font-weight: 700;
+  left: 13px;
+  letter-spacing: 0.1em;
+  padding: 8px 11px;
+  position: absolute;
+  text-transform: uppercase;
+}
+
+.featured-work-copy {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  padding: 19px 21px 21px;
+}
+
+.featured-work-type {
+  color: var(--accent-color);
+  display: block;
+  font-family: var(--nav-font);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  margin-bottom: 7px;
+  text-transform: uppercase;
+}
+
+.featured-work-copy h3 {
+  color: var(--ink);
+  font-size: 22px;
+  letter-spacing: -0.035em;
+  margin: 0;
+}
+
+.featured-work-copy>a {
+  align-items: center;
+  background: var(--soft-paper);
+  border-radius: 50%;
+  color: var(--ink);
+  display: flex;
+  flex: 0 0 38px;
+  height: 38px;
+  justify-content: center;
+  transition: background 0.25s ease, color 0.25s ease;
+  width: 38px;
+}
+
+.featured-work-copy>a:hover {
+  background: var(--accent-color);
+  color: #fff;
+}
+
 .reels {
   overflow: hidden;
 }
@@ -2558,7 +2686,46 @@ section,
   position: absolute;
   width: 180px;
 }
+/* Portfolio image styling */
+.portfolio-item .img-fluid {
+    width: 100%;
+    height: 280px;
 
+    display: block;
+
+    object-fit: cover;
+    object-position: center;
+
+    border-radius: 20px;
+
+    transition: transform 0.4s ease, border-radius 0.4s ease;
+}
+
+/* Subtle hover effect */
+.portfolio-item:hover .img-fluid {
+    transform: scale(1.03);
+}
+
+/* Keep the portfolio container rounded */
+.portfolio-item {
+    overflow: hidden;
+    border-radius: 20px;
+}
+
+/* Tablet */
+@media (max-width: 991px) {
+    .portfolio-item .img-fluid {
+        height: 260px;
+    }
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+    .portfolio-item .img-fluid {
+        height: 240px;
+        border-radius: 16px;
+    }
+}
 .reel-fallback:before {
   left: -75px;
   top: 68px;
@@ -2657,6 +2824,10 @@ section,
   }
 
   .live-work-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .featured-work-grid {
     grid-template-columns: 1fr;
   }
 
