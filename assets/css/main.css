@@ -516,9 +516,15 @@ h6 {
   z-index: 9999;
   overflow: hidden;
   background-color: var(--background-color);
-  transition: all 0.6s ease-out;
+  transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
   width: 100%;
   height: 100vh;
+}
+
+#preloader.loaded {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
 }
 
 #preloader:before,
@@ -2376,6 +2382,99 @@ section,
   object-fit: cover;
   object-position: top center;
   width: calc(25% - 7px);
+}
+
+/* Featured Zingos project showcase */
+.latest-project-zingos {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 1.25fr 0.75fr;
+  min-height: 380px;
+}
+
+.zingos-preview {
+  background: linear-gradient(135deg, #ffefe6 0%, #ffe0cc 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  gap: 16px;
+  overflow: hidden;
+  position: relative;
+}
+
+.zingos-frame {
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 12px 30px rgba(238, 85, 34, 0.18), 0 4px 10px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.zingos-frame-primary {
+  flex: 1.3;
+}
+
+.zingos-frame-secondary {
+  flex: 0.9;
+  display: block;
+}
+
+.zingos-frame img {
+  display: block;
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+  object-position: top center;
+  transition: transform 0.5s ease;
+}
+
+.latest-project-zingos:hover .zingos-frame-primary {
+  transform: translateY(-4px) scale(1.02);
+}
+
+.latest-project-zingos:hover .zingos-frame-secondary {
+  transform: translateY(4px) scale(1.02);
+}
+
+.latest-project-zingos .latest-project-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 36px 34px;
+}
+
+@media (max-width: 991px) {
+  .latest-project-zingos {
+    grid-template-columns: 1fr;
+  }
+
+  .zingos-preview {
+    padding: 18px;
+    gap: 12px;
+  }
+
+  .zingos-frame img {
+    height: 180px;
+  }
+
+  .latest-project-zingos .latest-project-copy {
+    padding: 25px 27px 28px;
+  }
+}
+
+@media (max-width: 575px) {
+  .zingos-frame-secondary {
+    display: none;
+  }
+
+  .zingos-frame-primary {
+    flex: 1;
+  }
+
+  .zingos-frame img {
+    height: 200px;
+  }
 }
 
 .project-status {

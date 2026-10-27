@@ -63,9 +63,24 @@
    */
   const preloader = document.querySelector('#preloader');
   if (preloader) {
-    window.addEventListener('load', () => {
-      preloader.remove();
-    });
+    let preloaderDismissed = false;
+    const hidePreloader = () => {
+      if (preloaderDismissed) return;
+      preloaderDismissed = true;
+      preloader.classList.add('loaded');
+      setTimeout(() => {
+        if (preloader.parentNode) preloader.remove();
+      }, 500);
+    };
+
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+      hidePreloader();
+    } else {
+      document.addEventListener('DOMContentLoaded', hidePreloader);
+      window.addEventListener('load', hidePreloader);
+      // Hard failsafe: never block screen for more than 600ms even on slow connections
+      setTimeout(hidePreloader, 600);
+    }
   }
 
   /**
@@ -93,47 +108,58 @@
    * Animation on scroll function and init
    */
   function aosInit() {
-    AOS.init({
-      duration: 600,
-      easing: 'ease-in-out',
-      once: true,
-      mirror: false
-    });
+    if (typeof AOS !== 'undefined') {
+      AOS.init({
+        duration: 600,
+        easing: 'ease-in-out',
+        once: true,
+        mirror: false
+      });
+    }
   }
-  window.addEventListener('load', aosInit);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', aosInit);
+  } else {
+    aosInit();
+  }
 
   /**
    * Animate the skills items on reveal
    */
   let skillsAnimation = document.querySelectorAll('.skills-animation');
-  skillsAnimation.forEach((item) => {
-    new Waypoint({
-      element: item,
-      offset: '80%',
-      handler: function(direction) {
-        let progress = item.querySelectorAll('.progress .progress-bar');
-        progress.forEach(el => {
-          el.style.width = el.getAttribute('aria-valuenow') + '%';
-        });
-      }
+  if (skillsAnimation.length > 0 && typeof Waypoint !== 'undefined') {
+    skillsAnimation.forEach((item) => {
+      new Waypoint({
+        element: item,
+        offset: '80%',
+        handler: function(direction) {
+          let progress = item.querySelectorAll('.progress .progress-bar');
+          progress.forEach(el => {
+            el.style.width = el.getAttribute('aria-valuenow') + '%';
+          });
+        }
+      });
     });
-  });
+  }
 
   /**
    * Initiate Pure Counter
    */
-  new PureCounter();
+  if (typeof PureCounter !== 'undefined') {
+    new PureCounter();
+  }
 
   /**
    * Init swiper sliders
    */
   function initSwiper() {
+    if (typeof Swiper === 'undefined') return;
     document.querySelectorAll(".init-swiper").forEach(function(swiperElement) {
-      let config = JSON.parse(
-        swiperElement.querySelector(".swiper-config").innerHTML.trim()
-      );
+      const configElem = swiperElement.querySelector(".swiper-config");
+      if (!configElem) return;
+      let config = JSON.parse(configElem.innerHTML.trim());
 
-      if (swiperElement.classList.contains("swiper-tab")) {
+      if (swiperElement.classList.contains("swiper-tab") && typeof initSwiperWithCustomPagination === 'function') {
         initSwiperWithCustomPagination(swiperElement, config);
       } else {
         new Swiper(swiperElement, config);
@@ -141,14 +167,20 @@
     });
   }
 
-  window.addEventListener("load", initSwiper);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initSwiper);
+  } else {
+    initSwiper();
+  }
 
   /**
    * Initiate glightbox
    */
-  const glightbox = GLightbox({
-    selector: '.glightbox'
-  });
+  if (typeof GLightbox !== 'undefined') {
+    const glightbox = GLightbox({
+      selector: '.glightbox'
+    });
+  }
 
   /**
    * Init isotope layout and filters
@@ -157,24 +189,32 @@
     let layout = isotopeItem.getAttribute('data-layout') ?? 'masonry';
     let filter = isotopeItem.getAttribute('data-default-filter') ?? '*';
     let sort = isotopeItem.getAttribute('data-sort') ?? 'original-order';
+    const container = isotopeItem.querySelector('.isotope-container');
+    if (!container || typeof Isotope === 'undefined') return;
 
-    let initIsotope;
-    imagesLoaded(isotopeItem.querySelector('.isotope-container'), function() {
-      initIsotope = new Isotope(isotopeItem.querySelector('.isotope-container'), {
-        itemSelector: '.isotope-item',
-        layoutMode: layout,
-        filter: filter,
-        sortBy: sort
-      });
+    let initIsotope = new Isotope(container, {
+      itemSelector: '.isotope-item',
+      layoutMode: layout,
+      filter: filter,
+      sortBy: sort
     });
+
+    if (typeof imagesLoaded !== 'undefined') {
+      imagesLoaded(container, function() {
+        initIsotope.layout();
+      });
+    }
 
     isotopeItem.querySelectorAll('.isotope-filters li').forEach(function(filters) {
       filters.addEventListener('click', function() {
-        isotopeItem.querySelector('.isotope-filters .filter-active').classList.remove('filter-active');
+        const activeFilter = isotopeItem.querySelector('.isotope-filters .filter-active');
+        if (activeFilter) activeFilter.classList.remove('filter-active');
         this.classList.add('filter-active');
-        initIsotope.arrange({
-          filter: this.getAttribute('data-filter')
-        });
+        if (initIsotope) {
+          initIsotope.arrange({
+            filter: this.getAttribute('data-filter')
+          });
+        }
         if (typeof aosInit === 'function') {
           aosInit();
         }
@@ -184,8 +224,9 @@
   });
 
   /**
-   * Instagram Reel embeds with a safe fallback and desktop drag scrolling
+   * Instagram Reel embeds with lazy loading and desktop drag scrolling
    */
+  const reelSection = document.querySelector('#reels');
   const reelTrack = document.querySelector('.reel-track');
   if (reelTrack) {
     let isDraggingReels = false;
@@ -226,26 +267,51 @@
 
     reelTrack.addEventListener('scroll', updateReelParallax, { passive: true });
     window.addEventListener('resize', updateReelParallax);
-    window.addEventListener('load', updateReelParallax);
+    updateReelParallax();
 
     function processReelEmbeds() {
-      if (window.instgrm && window.instgrm.Embeds) window.instgrm.Embeds.process();
+      if (window.instgrm && window.instgrm.Embeds) {
+        window.instgrm.Embeds.process();
+      }
       reelTrack.querySelectorAll('.instagram-media').forEach(embed => {
         const card = embed.closest('.reel-card');
         const embedFrame = embed.querySelector('iframe');
-        if (embedFrame && embedFrame.getBoundingClientRect().height > 0) card.classList.add('is-embedded');
+        if (embedFrame && embedFrame.getBoundingClientRect().height > 0) {
+          card.classList.add('is-embedded');
+        }
       });
     }
 
-    window.addEventListener('load', () => {
-      processReelEmbeds();
-      let embedChecks = 0;
-      const embedCheckTimer = window.setInterval(() => {
+    let instagramLoaded = false;
+    function loadInstagramScript() {
+      if (instagramLoaded) return;
+      instagramLoaded = true;
+      const script = document.createElement('script');
+      script.src = 'https://www.instagram.com/embed.js';
+      script.async = true;
+      script.onload = () => {
         processReelEmbeds();
-        embedChecks += 1;
-        if (embedChecks >= 8) window.clearInterval(embedCheckTimer);
-      }, 1000);
-    });
+        let embedChecks = 0;
+        const embedCheckTimer = window.setInterval(() => {
+          processReelEmbeds();
+          embedChecks += 1;
+          if (embedChecks >= 6) window.clearInterval(embedCheckTimer);
+        }, 1000);
+      };
+      document.body.appendChild(script);
+    }
+
+    if ('IntersectionObserver' in window && reelSection) {
+      const observer = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+          loadInstagramScript();
+          observer.disconnect();
+        }
+      }, { rootMargin: '400px' });
+      observer.observe(reelSection);
+    } else {
+      setTimeout(loadInstagramScript, 2500);
+    }
   }
 
   /**
